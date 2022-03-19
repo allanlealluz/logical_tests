@@ -21,7 +21,7 @@ def parse_int(string):
         'sixty': 60,
         'seventy': 70,
         'eighty': 80,
-        'nineteen': 90,
+        'ninety': 90,
         'million' : 1000000,
         'thirteen': 13,
         'fourteen': 14,
@@ -48,20 +48,19 @@ def parse_int(string):
         else:
             num.append(word)
     for i,n in enumerate(num):
-        positions = [c-1 for c,n in enumerate(num) if c > i and n == 'thousand']
-        resp = [True for po in positions if po > i]
-        if n == 'hundred' and resp == False:
-            num[i-1] *= 100
-        elif n == 'hundred' and resp == True:
-            num[i -1] *= 100000
+        s = ['t' for c,n in enumerate(num) if c > i and n == 'thousand']
+        if n == 'hundred':
+            if 't' not in s:
+                num[i-1] *= 100
+            else:
+                num[i - 1] *= 100000
         elif n == 'thousand':
             num[i-1] *= 1000
         elif n == 'million':
             num[i - 1] *= 1000000
     t = 0
     resu = [t := t + n for n in num if isinstance(n,int) ]
-    print(num)
-    print(t)
+    print(f'the result is {t}')
 parse_int('one hundred two')
 parse_int('three hundred nine')
 parse_int('thirty-three thousand nine hundred fifty-eight')
